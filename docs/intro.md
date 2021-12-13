@@ -2,34 +2,22 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Introduzione
 
-Let's discover **Docusaurus in less than 5 minutes**.
+ContoAperto è una soluzione composta da più componenti separati.
 
-## Getting Started
+## API REST
 
-Get started by **creating a new site**.
+L'unico punto di accesso al servizio. Espone tutte le funzionalità del sistema, e viene utilizzata allo stesso modo da tutti i frontend.
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+## Pannello di amministrazione
 
-## Generate a new site
+Un frontend che permette ai merchant di amministrare i propri contratti e le richieste di pagamento.
 
-Generate a new Docusaurus site using the **classic template**:
+## Interfaccia utente
 
-```shell
-npm init docusaurus@latest my-website classic
-```
+Un semplice frontend utilizzato dai clienti per accettare i contratti, gli abbonamenti e per gestire i propri pagamenti.
 
-## Start your site
+## Webhooks
 
-Run the development server:
-
-```shell
-cd my-website
-
-npx docusaurus start
-```
-
-Your site starts at `http://localhost:3000`.
-
-Open `docs/intro.md` and edit some lines: the site **reloads automatically** and displays your changes.
+Permettono di registrare uno o più URL che vengono notificati quando cambia qualche dato su ContoAperto.
