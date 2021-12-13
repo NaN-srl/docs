@@ -13,8 +13,10 @@ const config = {
   onBrokenLinks: "throw",
   onBrokenMarkdownLinks: "warn",
   favicon: "img/favicon.ico",
-  organizationName: "NaN-srl", // Usually your GitHub org/user name.
-  projectName: "docs", // Usually your repo name.
+  organizationName: "NaN-srl",
+  projectName: "docs",
+  deploymentBranch: "gh-pages",
+  trailingSlash: false,
 
   presets: [
     [
