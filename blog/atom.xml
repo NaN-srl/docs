@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+    <id>https://contoaperto.com/blog</id>
+    <title>ContoAperto docs Blog</title>
+    <updated>2021-12-13T00:00:00.000Z</updated>
+    <generator>https://github.com/jpmonette/feed</generator>
+    <link rel="alternate" href="https://contoaperto.com/blog"/>
+    <subtitle>ContoAperto docs Blog</subtitle>
+    <icon>https://contoaperto.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Hello world!]]></title>
+        <id>hello-world</id>
+        <link href="https://contoaperto.com/blog/hello-world"/>
+        <updated>2021-12-13T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[Con il più classico degli incipit informatici, parte il progetto di documentazione di ContoAperto.]]></summary>
+        <content type="html"><![CDATA[<p>Con il più classico degli incipit informatici, parte il progetto di documentazione di ContoAperto.</p><p>Scrivo altre cose.</p>]]></content>
+        <author>
+            <name>Franco Traversaro</name>
+        </author>
+    </entry>
+</feed>

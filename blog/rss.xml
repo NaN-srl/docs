@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+    <channel>
+        <title>ContoAperto docs Blog</title>
+        <link>https://contoaperto.com/blog</link>
+        <description>ContoAperto docs Blog</description>
+        <lastBuildDate>Mon, 13 Dec 2021 00:00:00 GMT</lastBuildDate>
+        <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
+        <generator>https://github.com/jpmonette/feed</generator>
+        <item>
+            <title><![CDATA[Hello world!]]></title>
+            <link>https://contoaperto.com/blog/hello-world</link>
+            <guid>hello-world</guid>
+            <pubDate>Mon, 13 Dec 2021 00:00:00 GMT</pubDate>
+            <description><![CDATA[Con il più classico degli incipit informatici, parte il progetto di documentazione di ContoAperto.]]></description>
+            <content:encoded><![CDATA[<p>Con il più classico degli incipit informatici, parte il progetto di documentazione di ContoAperto.</p><p>Scrivo altre cose.</p>]]></content:encoded>
+        </item>
+    </channel>
+</rss>
