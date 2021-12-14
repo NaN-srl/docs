@@ -65,6 +65,7 @@ const config = {
       footer: {
         style: "dark",
         copyright: `Copyright © ${new Date().getFullYear()} NaN srl`,
+        logo: { src: "/img/logo.svg", height: "20px", alt: "ContoAperto" },
       },
       prism: {
         theme: lightCodeTheme,
