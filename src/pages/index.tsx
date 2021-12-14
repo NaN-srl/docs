@@ -38,18 +38,18 @@ const FeatureList: FeatureItem[] = [
     title: "Leggi gli aggiornamenti",
     image: "/img/news.svg",
     url: "/blog",
-    description: <>Introduzione delle ultime novità e altre notizie utili.</>,
+    description: <>Ultime novità e altre notizie utili.</>,
   },
 ];
 
 function Feature({ title, image, description, url }: FeatureItem) {
   return (
     <div className={clsx("col col--4")}>
+      <a href={url} className={styles.featureSvgCropper}>
+        <img className={styles.featureSvg} alt={title} src={image} />
+      </a>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>
-        <a href={url}>
-          <img className={styles.featureSvg} alt={title} src={image} />
-        </a>
         <p>{description}</p>
       </div>
     </div>

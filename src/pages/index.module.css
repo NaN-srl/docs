@@ -29,7 +29,25 @@
   width: 100%;
 }
 
-.featureSvg {
-  height: 200px;
+.featureSvgCropper {
+  display: block;
+  margin: 5px auto 15px auto;
   width: 200px;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 50%;
+  box-shadow: 0 0 5px rgba(26, 136, 112, 0.15);
+  transition: all 0.3s ease-in-out;
+}
+
+.featureSvg {
+  height: 100%;
+  width: 100%;
+}
+
+.featureSvgCropper:hover {
+  box-shadow: 0 0 20px rgba(26, 136, 112, 0.6);
+  width: 210px;
+  height: 210px;
+  margin: 0 auto 10px auto;
 }
