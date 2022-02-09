@@ -1,4 +1,5 @@
 {
-    "peer": true,
-    "removeRange": true
+  "peer": true,
+  "removeRange": true,
+  "reject": ["@mdx-js/react"]
 }
