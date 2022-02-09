@@ -4,16 +4,27 @@
         <title>ContoAperto docs Blog</title>
         <link>https://contoaperto.com/blog</link>
         <description>ContoAperto docs Blog</description>
-        <lastBuildDate>Mon, 13 Dec 2021 00:00:00 GMT</lastBuildDate>
+        <lastBuildDate>Tue, 22 Feb 2022 00:00:00 GMT</lastBuildDate>
         <docs>https://validator.w3.org/feed/docs/rss2.html</docs>
         <generator>https://github.com/jpmonette/feed</generator>
+        <item>
+            <title><![CDATA[Crittografia e sicurezza]]></title>
+            <link>https://contoaperto.com/blog/crittografia-sicurezza</link>
+            <guid>crittografia-sicurezza</guid>
+            <pubDate>Tue, 22 Feb 2022 00:00:00 GMT</pubDate>
+            <description><![CDATA[La sicurezza è un aspetto importante di ContoAperto, e facciamo ogni sforzo per implementare tutte le migliori soluzioni per garantirla: dalle basi, con l'autenticazione.]]></description>
+            <content:encoded><![CDATA[<p>La sicurezza è un aspetto importante di ContoAperto, e facciamo ogni sforzo per implementare tutte le migliori soluzioni per garantirla: dalle basi, con l'autenticazione.</p><p>La sezione <a href="/docs/autenticazione">Autenticazione e sicurezza</a> è già stata aggiornata per descrivere queste nuove funzionalità: da un lato è stata introdotta una nuova forma di autenticazione tramite API key che si basa sulla crittografia a chiave assimmetrica, dall'altro il server firma ogni payload di risposta in modo che l'affidabilità del messaggio possa essere confermato tramite la chiave pubblica, liberamente disponibile per tutti.</p><p>A margine, l'intera infrstruttura di autenticazione è stata riscritta, e ora si basa sul progetto open source <a href="https://www.keycloak.org/" target="_blank" rel="noopener noreferrer">Keycloak</a>. Questo ci garantisce un'elasticità molto maggiore rispetto al preesistente <a href="https://aws.amazon.com/it/cognito/" target="_blank" rel="noopener noreferrer">AWS Cognito</a>, e ci permette di guardare al futuro con una possibile integrazione col sistema <a href="https://www.spid.gov.it/" target="_blank" rel="noopener noreferrer">SpID</a>.</p>]]></content:encoded>
+            <category>annunci</category>
+            <category>sicurezza</category>
+        </item>
         <item>
             <title><![CDATA[Hello world!]]></title>
             <link>https://contoaperto.com/blog/hello-world</link>
             <guid>hello-world</guid>
             <pubDate>Mon, 13 Dec 2021 00:00:00 GMT</pubDate>
             <description><![CDATA[Con il più classico degli incipit informatici, parte il progetto di documentazione di ContoAperto.]]></description>
-            <content:encoded><![CDATA[<p>Con il più classico degli incipit informatici, parte il progetto di documentazione di ContoAperto.</p><p>Scrivo altre cose.</p>]]></content:encoded>
+            <content:encoded><![CDATA[<p>Con il più classico degli incipit informatici, parte il progetto di documentazione di ContoAperto.</p><p>Oltre che le pagine del manuale tecnico, su questo sito verranno pubblicati annunci e approfondimenti di interesse per sviluppatori e integratori, casi d'uso ragguardevoli e qualsiasi altro argomento della sfera tecnologica di ContoAperto.</p><p>Rimanete collegati!</p>]]></content:encoded>
+            <category>annunci</category>
         </item>
     </channel>
 </rss>

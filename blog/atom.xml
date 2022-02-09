@@ -2,20 +2,34 @@
 <feed xmlns="http://www.w3.org/2005/Atom">
     <id>https://contoaperto.com/blog</id>
     <title>ContoAperto docs Blog</title>
-    <updated>2021-12-13T00:00:00.000Z</updated>
+    <updated>2022-02-22T00:00:00.000Z</updated>
     <generator>https://github.com/jpmonette/feed</generator>
     <link rel="alternate" href="https://contoaperto.com/blog"/>
     <subtitle>ContoAperto docs Blog</subtitle>
     <icon>https://contoaperto.com/img/favicon.ico</icon>
+    <entry>
+        <title type="html"><![CDATA[Crittografia e sicurezza]]></title>
+        <id>crittografia-sicurezza</id>
+        <link href="https://contoaperto.com/blog/crittografia-sicurezza"/>
+        <updated>2022-02-22T00:00:00.000Z</updated>
+        <summary type="html"><![CDATA[La sicurezza è un aspetto importante di ContoAperto, e facciamo ogni sforzo per implementare tutte le migliori soluzioni per garantirla: dalle basi, con l'autenticazione.]]></summary>
+        <content type="html"><![CDATA[<p>La sicurezza è un aspetto importante di ContoAperto, e facciamo ogni sforzo per implementare tutte le migliori soluzioni per garantirla: dalle basi, con l'autenticazione.</p><p>La sezione <a href="/docs/autenticazione">Autenticazione e sicurezza</a> è già stata aggiornata per descrivere queste nuove funzionalità: da un lato è stata introdotta una nuova forma di autenticazione tramite API key che si basa sulla crittografia a chiave assimmetrica, dall'altro il server firma ogni payload di risposta in modo che l'affidabilità del messaggio possa essere confermato tramite la chiave pubblica, liberamente disponibile per tutti.</p><p>A margine, l'intera infrstruttura di autenticazione è stata riscritta, e ora si basa sul progetto open source <a href="https://www.keycloak.org/" target="_blank" rel="noopener noreferrer">Keycloak</a>. Questo ci garantisce un'elasticità molto maggiore rispetto al preesistente <a href="https://aws.amazon.com/it/cognito/" target="_blank" rel="noopener noreferrer">AWS Cognito</a>, e ci permette di guardare al futuro con una possibile integrazione col sistema <a href="https://www.spid.gov.it/" target="_blank" rel="noopener noreferrer">SpID</a>.</p>]]></content>
+        <author>
+            <name>Franco Traversaro</name>
+        </author>
+        <category label="annunci" term="annunci"/>
+        <category label="sicurezza" term="sicurezza"/>
+    </entry>
     <entry>
         <title type="html"><![CDATA[Hello world!]]></title>
         <id>hello-world</id>
         <link href="https://contoaperto.com/blog/hello-world"/>
         <updated>2021-12-13T00:00:00.000Z</updated>
         <summary type="html"><![CDATA[Con il più classico degli incipit informatici, parte il progetto di documentazione di ContoAperto.]]></summary>
-        <content type="html"><![CDATA[<p>Con il più classico degli incipit informatici, parte il progetto di documentazione di ContoAperto.</p><p>Scrivo altre cose.</p>]]></content>
+        <content type="html"><![CDATA[<p>Con il più classico degli incipit informatici, parte il progetto di documentazione di ContoAperto.</p><p>Oltre che le pagine del manuale tecnico, su questo sito verranno pubblicati annunci e approfondimenti di interesse per sviluppatori e integratori, casi d'uso ragguardevoli e qualsiasi altro argomento della sfera tecnologica di ContoAperto.</p><p>Rimanete collegati!</p>]]></content>
         <author>
             <name>Franco Traversaro</name>
         </author>
+        <category label="annunci" term="annunci"/>
     </entry>
 </feed>
