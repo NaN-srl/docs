@@ -64,7 +64,7 @@ openssl rsa -in key.pem -pubout > key.pub
 
 L'eventuale rotazione delle chiavi deve ovviamente essere gestita autonomamente, poiché ContoAperto conosce esclusivamente la chiave pubblica.
 
-La cifratura avviene utilizzando la chiave privata `key.pem` e indicando come keyId il campo `id` dell'API key, una stringa alfanumerica di 26 caratteri.
+La cifratura avviene utilizzando la chiave privata `key.pem` e indicando come keyId il campo `id` dell'API key, una stringa alfanumerica di 26 caratteri. Gli algoritmi supportati per la creazione della signature sono **rsa-sha1**, **rsa-sha256** e **rsa-sha512**.
 
 :::caution
 Un'API key senza chiave pubblica **non può essere utilizzata in questa modalità**, e le chiamate risulteranno in un `401 Unauthorized`.
