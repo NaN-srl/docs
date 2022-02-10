@@ -11,9 +11,7 @@ Trattando dati estremamente sensibili, è consigliabile attuare misure di preven
 
 Tutte le risposte delle API REST sono firmate digitalmente, in modo che il client possa verificare che il payload ricevuto sia stato realmente generato da ContoAperto. La chiave pubblica è esposta direttamente sulle API, tramite una chiamata che non richiede autenticazione: [`GET /system/public-key`](https://api.dev.contoaperto.com/system/public-key). L'header di risposta `X-Signature` contiene l'encoding Base64 della **PKCS #1 v1.5 RSA digest signature con SHA256**: per un'implementazione di esempio si veda [l'esempio a fondo pagina](#esempio-di-chiamata).
 
-:::info
-Questa funzionalità al momento è implementata esclusivamente nelle risposte del server. Un omologo per le richieste è in via di sviluppo, in modo da integrarsi con l'autenticazione tramite [chiave crittografica personale](#con-chiave-pubblica-header-authorization-signature) e garantire ogni aspetto della richiesta.
-:::
+Analogamente, se il client utilizza un'API key con annessa chiave pubblica, può aggiungere un header di richiesta `X-Signature` generato nella stessa maniera, e il server verificherà la coerenza della richiesta prima di accettarla.
 
 ## Autenticazione
 
@@ -77,43 +75,114 @@ Un'implementazione di esempio, in typescript, potrebbe quindi essere la seguente
 ```typescript title="exampleCall.ts"
 import crypto from 'crypto';
 import fs from 'fs';
+import http from 'http';
 import httpSignature from 'http-signature';
 import https from 'https';
 
-export const verifySignature = (payload: string, base64signature: string) => {
+// Per prima cosa occorre caricare le chiavi crittografiche
+
+// La propria chiave privata: conservarla col codice è una cattiva idea, questo è solo un esempio
+const PRIVATE_CLIENT_KEY = fs.readFileSync('./key.pem', 'ascii');
+
+// La chiave pubblica di ContoAperto: si può recuperare ad ogni chiamata, ma per motivi di performance
+// è consigliabile tenere una copia locale.
+const PUBLIC_SERVER_KEY = fs.readFileSync('./contoaperto.pem', 'ascii');
+
+// Funzione che verifica una signature usando la chiave pubblica di ContoAperto
+const verifySignature = (payload: string, base64signature: string) => {
     const data = Buffer.from(payload);
-    const publicKey = fs.readFileSync('./contoaperto.pem', 'ascii');
     const signature = Buffer.from(base64signature, 'base64');
-    return crypto.verify('RSA-SHA256', data, publicKey, signature);
+    return crypto.verify('RSA-SHA256', data, PUBLIC_SERVER_KEY, signature);
 };
 
-const req = https.request(
+// Funzione che calcola una signature usando la propria chiave privata
+const calculateSignature = (payload: string) => {
+    const data = Buffer.from(payload);
+    return crypto.sign('RSA-SHA256', data, PRIVATE_CLIENT_KEY).toString('base64');
+};
+
+// Funzione che gestisce effettivamente la risposta dal server
+const manageRequest = (response: http.IncomingMessage) => {
+    // Annotiamo la signature della risposta
+    const signature = response.headers['x-signature'] as string;
+
+    // Riceviamo il corpo della risposta
+    let jsonResponse = '';
+    response.on('data', (chunk) => (jsonResponse += chunk));
+
+    // Quando l'invio è giunto al termine verifichiamo la correttezza della signature
+    response.on('end', () => {
+        const isValid = verifySignature(jsonResponse, signature);
+        console.log('Risultato:', { jsonResponse, isValid });
+    });
+};
+
+// Funzione che aggiunge l'header di autenticazione a una richiesta.
+// Aggiungere l'header della signature al checksum è opzionale, il server controlla comunque
+// la validità dell'header X-Signature in un passaggio separato
+const addApiKeySignature = (req: http.ClientRequest) => {
+    httpSignature.sign(req, {
+        key: PRIVATE_CLIENT_KEY,
+        keyId: '01FVD27F7HHRSK11XHNPQ4H2J5',
+        headers: ['date', 'x-signature'],
+    });
+};
+
+// ##################################
+// # ESEMPIO DI CHIAMATA POST/PUT   #
+// ##################################
+
+// Costruiamo il payload della richiesta
+const data = JSON.stringify({ language: 'it' });
+
+// Creiamo la richiesta, aggiungendo gli header necessari alla gestione del payload
+const reqPut = https.request(
+    {
+        method: 'PUT',
+        host: 'api.dev.contoaperto.com',
+        path: '/user',
+        headers: {
+            'Content-Type': 'application/json',
+            'Content-Length': Buffer.byteLength(data),
+            'X-Signature': calculateSignature(data),
+        },
+    },
+    manageRequest,
+);
+
+// Firmiamo la richiesta
+addApiKeySignature(reqPut);
+
+// Aggiungiamo il payload alla richiesta
+reqPut.write(data);
+
+// Lanciamo la richiesta e attendiamo la risposta
+reqPut.end();
+
+// ##################################
+// # ESEMPIO DI CHIAMATA GET/DELETE #
+// ##################################
+
+// Creiamo la richiesta, aggiungendo lo stesso la signature; questo passaggio è opzionale per il server,
+// ma per come stiamo configurando la libreria http-signature dobbiamo lo stesso valorizzare l'header per non
+// incorrere in errore
+const reqGet = https.request(
     {
         method: 'GET',
         host: 'api.dev.contoaperto.com',
         path: '/user',
+        headers: {
+            'X-Signature': calculateSignature(''),
+        },
     },
-    (response) => {
-        let jsonResponse = '';
-        const signature = response.headers['x-signature'] as string;
-
-        response.on('data', (chunk) => {
-            jsonResponse += chunk;
-        });
-
-        response.on('end', () => {
-            const isValid = verifySignature(jsonResponse, signature);
-            console.log('Response analisys:', { jsonResponse, signature, isValid });
-        });
-    },
+    manageRequest,
 );
 
-httpSignature.sign(req, {
-    key: fs.readFileSync('./key.pem', 'ascii'),
-    keyId: '01FVD27F7HHRSK11XHNPQ4H2J5',
-});
+// Firmiamo la richiesta
+addApiKeySignature(reqGet);
 
-req.end();
+// Lanciamo la richiesta e attendiamo la risposta
+reqGet.end();
 ```
 
 Questo codice genera una chiamata che, tra i suoi header, ha: 
@@ -127,9 +196,12 @@ Si noti che la signature varia di chiamata in chiamata, e può essere configurat
 L'output a console sarebbe qualcosa di simile a questo:
 
 ```
-Response analisys: {
+Risultato: {
+  jsonResponse: '{"id":"01FVAK8VQXTEQ6JES6P4E8A3QK","firstName":"Mario","lastName":"Rossi","email":"mario@test.com","phone":"+39399000000","language":"en"}',
+  isValid: true
+}
+Risultato: {
   jsonResponse: '{"id":"01FVAK8VQXTEQ6JES6P4E8A3QK","firstName":"Mario","lastName":"Rossi","email":"mario@test.com","phone":"+39399000000","language":"it"}',
-  signature: 'JKvrt56axFApTBEbV2sdT1JGsCfHteMHjnDn7Xz7i77JOPpKgMAh5PzftdZ6yafDepDG+C1gf/+9xRMaXF498SCPRxYN4CA5AmocuK5/KjBA+432SkMnijt3TlrFEfyj1ZhuNK5VSTglrIQ60jsDpKFO7/tpyeXnUJXx1Fqo0tj4Np5GihIuphxa3l7JueRuKcKvuVcxEbosHQi1vKTt2GVUCU70+smZy1w0o2apxaIbfJ5nhZnX/4pv9kmYUeQhzeRphV8Fjt1srvDRzIBawsU2Q2wFA6Xx2ubGTTp0fdehgsS2q3tOQj7KLT7+o0X3GYSAl5BRCiswsZXu+aBudw==',
   isValid: true
 }
 ```
